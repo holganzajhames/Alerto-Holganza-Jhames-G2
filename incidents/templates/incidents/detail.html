@@ -1,0 +1,11 @@
+{% extends "accounts/base.html" %}
+{% block title %}SOS report #{{ report.pk }}{% endblock %}
+{% block content %}
+<section class="card form-card">
+  <h1>SOS report #{{ report.pk }}</h1>
+  {% include "incidents/report_fields.html" %}
+  <p><a class="button" href="{% url 'incidents:edit' report.pk %}">Edit report</a>
+    <a href="{% url 'incidents:delete' report.pk %}">Delete report</a></p>
+  <a href="{% url 'incidents:list' %}">Back to my reports</a>
+</section>
+{% endblock %}

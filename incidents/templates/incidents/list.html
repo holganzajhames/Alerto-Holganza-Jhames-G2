@@ -1,0 +1,17 @@
+{% extends "accounts/base.html" %}
+{% block title %}My SOS reports{% endblock %}
+{% block content %}
+<h1>My SOS reports</h1>
+<p><a class="button" href="{% url 'incidents:create' %}">New SOS report</a></p>
+<div class="grid">
+  {% for report in reports %}
+    <section class="card">
+      <h2><a href="{% url 'incidents:detail' report.pk %}">{{ report.get_category_display }} #{{ report.pk }}</a></h2>
+      <p>{{ report.location }}</p>
+      <p>{{ report.created_at|date:"M j, Y, g:i A" }}</p>
+    </section>
+  {% empty %}
+    <p>You have no SOS reports yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

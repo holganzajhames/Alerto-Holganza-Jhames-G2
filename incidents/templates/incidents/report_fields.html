@@ -1,0 +1,9 @@
+<dl>
+  <dt>Incident type</dt><dd>{{ report.get_category_display }}</dd>
+  <dt>Location</dt><dd>{{ report.location }}</dd>
+  <dt>Description</dt><dd>{{ report.description|linebreaksbr }}</dd>
+  {% if report.latitude != None %}
+    <dt>GPS coordinates</dt><dd>{{ report.latitude }}, {{ report.longitude }}</dd>
+  {% endif %}
+  <dt>Submitted</dt><dd>{{ report.created_at|date:"M j, Y, g:i A" }}</dd>
+</dl>

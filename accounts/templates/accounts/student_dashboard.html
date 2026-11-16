@@ -4,6 +4,11 @@
 <h1>Student dashboard</h1>
 <p>Welcome, {{ user.first_name|default:user.username }}.</p>
 <section class="card">
+  <h2>Campus incidents</h2>
+  <p><a class="button" href="{% url 'incidents:create' %}">Submit an SOS report</a></p>
+  <a href="{% url 'incidents:list' %}">My SOS reports</a>
+</section>
+<section class="card">
   <h2>Your contact details</h2>
   <p>Keep your email and phone number current so campus staff can reach you.</p>
   <a class="button" href="{% url 'profile' %}">View your profile</a>
