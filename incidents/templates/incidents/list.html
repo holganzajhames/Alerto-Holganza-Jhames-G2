@@ -7,7 +7,7 @@
   {% for report in reports %}
     <section class="card">
       <h2><a href="{% url 'incidents:detail' report.pk %}">{{ report.get_category_display }} #{{ report.pk }}</a></h2>
-      <p>{{ report.location }}</p>
+      <p>{{ report.location }} · {{ report.get_status_display }}</p>
       <p>{{ report.created_at|date:"M j, Y, g:i A" }}</p>
     </section>
   {% empty %}

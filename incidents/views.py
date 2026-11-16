@@ -48,6 +48,9 @@ def report_edit(request, pk):
     if request.method == "POST":
         reports = reports.select_for_update()
     report = get_object_or_404(reports, pk=pk)
+    if report.status != SOSReport.Status.UNVERIFIED:
+        messages.error(request, "Reviewed reports can no longer be edited.")
+        return redirect("incidents:detail", pk=report.pk)
     form = SOSReportForm(request.POST if request.method == "POST" else None, instance=report)
     if request.method == "POST" and form.is_valid():
         form.save()
@@ -64,6 +67,9 @@ def report_delete(request, pk):
     if request.method == "POST":
         reports = reports.select_for_update()
     report = get_object_or_404(reports, pk=pk)
+    if report.status != SOSReport.Status.UNVERIFIED:
+        messages.error(request, "Reviewed reports can no longer be deleted.")
+        return redirect("incidents:detail", pk=report.pk)
     if request.method == "POST":
         report.delete()
         messages.success(request, "SOS report deleted.")
