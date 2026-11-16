@@ -6,9 +6,7 @@
   <section class="card">
     <h2>Student accounts</h2>
     <p class="stat">{{ student_count }}</p>
-    {% if perms.accounts.view_user or perms.accounts.change_user %}
-      <a class="button" href="{% url 'admin:accounts_user_changelist' %}">Manage accounts</a>
-    {% endif %}
+    <p>Student accounts registered in Alerto.</p>
   </section>
   <section class="card">
     <h2>Your profile</h2>

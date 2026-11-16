@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.urls import path
 
 from accounts import views
@@ -13,5 +12,4 @@ urlpatterns = [
     path("dashboard/admin/", views.admin_dashboard, name="admin_dashboard"),
     path("profile/", views.profile, name="profile"),
     path("profile/edit/", views.edit_profile, name="edit_profile"),
-    path("admin/", admin.site.urls),
 ]
