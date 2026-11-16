@@ -1,7 +1,7 @@
 from django import forms
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-from .models import SOSReport
+from .models import AlertReview, SOSReport
 
 
 class SOSReportForm(forms.ModelForm):
@@ -35,3 +35,10 @@ class SOSReportForm(forms.ModelForm):
         ):
             self.add_error("location_accuracy_m", "GPS accuracy requires both coordinates.")
         return data
+
+
+class AlertReviewForm(forms.ModelForm):
+    class Meta:
+        model = AlertReview
+        fields = ("decision", "remarks")
+        widgets = {"remarks": forms.Textarea(attrs={"rows": 3})}

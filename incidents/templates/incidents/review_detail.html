@@ -1,0 +1,21 @@
+{% extends "accounts/base.html" %}
+{% block title %}Review SOS report #{{ report.pk }}{% endblock %}
+{% block content %}
+<section class="card form-card">
+  <h1>Review SOS report #{{ report.pk }}</h1>
+  <p>Reported by {{ report.reporter.username }}</p>
+  {% include "incidents/report_fields.html" %}
+  {% if form %}
+    <form method="post" class="fields">
+      {% csrf_token %}
+      {{ form.as_div }}
+      <p>This decision is final.</p>
+      <button type="submit">Save decision</button>
+    </form>
+  {% else %}
+    <p>Reviewed {{ report.review.reviewed_at|date:"M j, Y, g:i A" }} by {{ report.review.reviewer.username }}.</p>
+    {% if report.review.remarks %}<p>{{ report.review.remarks|linebreaksbr }}</p>{% endif %}
+  {% endif %}
+  <p><a href="{% url 'incidents:review_list' %}">Back to reports</a></p>
+</section>
+{% endblock %}
