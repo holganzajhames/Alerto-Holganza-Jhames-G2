@@ -46,17 +46,14 @@ Run `python manage.py test` against a local PostgreSQL account with permission t
 | My profile | `/profile/` |
 | Edit profile | `/profile/edit/` |
 
-## Publish and submit
+## Branching and submission
 
-Create an empty public GitHub repository named `Alerto-Lastname-Firstname-Section`, replacing each placeholder with your class submission details. From this project folder, run:
+Create each feature branch from `develop` and open a pull request back into `develop`.
+Release the tested increment through a pull request from `develop` into `main`.
+Keep the merged feature branches for review. The [PD2 report](docs/Alerto-Holganza-Jhames-G2-PD2.pdf) includes the pull request links.
 
-```sh
-git log --oneline
-git remote add origin https://github.com/YOUR-USERNAME/Alerto-Lastname-Firstname-Section.git
-git push -u origin main
-```
-
-Open the repository link in an incognito window, then paste it into the [submission form](https://forms.gle/RmYMff8sL2Dp6pZ86).
+Verify the public repository and the report in an incognito window, then submit the
+repository URL through the [PD2 submission form](https://forms.gle/5EjRcvs4yFKRRt1e6).
 
 ## PD2 Core feature
 
