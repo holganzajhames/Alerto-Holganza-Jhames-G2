@@ -1,0 +1,17 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<section class="card form-card">
+  <h1>{{ title }}</h1>
+  <form method="post" class="fields">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <p><button type="button" id="capture-gps">Use my GPS location</button></p>
+    <p id="gps-status" role="status"></p>
+    <button type="submit">Save report</button>
+    <a href="{% url 'incidents:list' %}">Cancel</a>
+  </form>
+</section>
+<script src="{% static 'incidents/location.js' %}" defer></script>
+{% endblock %}

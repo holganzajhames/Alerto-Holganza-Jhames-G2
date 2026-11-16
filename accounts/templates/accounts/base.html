@@ -13,6 +13,11 @@
       <a class="brand" href="{% url 'dashboard' %}"><span aria-hidden="true">A</span> Alerto</a>
       <div class="nav-links">
         {% if user.is_authenticated %}
+          {% if user.is_staff %}
+            <a href="{% url 'incidents:review_list' %}">Review SOS reports</a>
+          {% else %}
+            <a href="{% url 'incidents:list' %}">My SOS reports</a>
+          {% endif %}
           <a href="{% url 'dashboard' %}">Dashboard</a>
           <a href="{% url 'profile' %}">Profile</a>
           <form method="post" action="{% url 'logout' %}">
