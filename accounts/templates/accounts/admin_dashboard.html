@@ -4,6 +4,11 @@
 <h1>Administrator dashboard</h1>
 <div class="grid">
   <section class="card">
+    <h2>Campus incidents</h2>
+    <p>Review SOS reports and record a final decision.</p>
+    <a class="button" href="{% url 'incidents:review_list' %}">Review reports</a>
+  </section>
+  <section class="card">
     <h2>Student accounts</h2>
     <p class="stat">{{ student_count }}</p>
     <p>Student accounts registered in Alerto.</p>

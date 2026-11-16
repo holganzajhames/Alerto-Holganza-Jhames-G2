@@ -46,14 +46,48 @@ Run `python manage.py test` against a local PostgreSQL account with permission t
 | My profile | `/profile/` |
 | Edit profile | `/profile/edit/` |
 
-## Publish and submit
+## Branching and submission
 
-Create an empty public GitHub repository named `Alerto-Lastname-Firstname-Section`, replacing each placeholder with your class submission details. From this project folder, run:
+Create each feature branch from `develop` and open a pull request back into `develop`.
+Release the tested increment through a pull request from `develop` into `main`.
+Keep the merged feature branches for review. The [PD2 report](docs/Alerto-Holganza-Jhames-G2-PD2.pdf) includes the pull request links.
 
-```sh
-git log --oneline
-git remote add origin https://github.com/YOUR-USERNAME/Alerto-Lastname-Firstname-Section.git
-git push -u origin main
+Verify the public repository and the report in an incognito window, then submit the
+repository URL through the [PD2 submission form](https://forms.gle/5EjRcvs4yFKRRt1e6).
+
+## PD2 Core feature
+
+Alerto lets students report campus incidents and lets authorized staff manually review each report. The Student dashboard links to **Submit an SOS report** and **My SOS reports**. Students can create, view, edit, and delete their own unverified reports. The Administrator dashboard links to **Review reports**, where staff can confirm or dismiss an unverified report once. A confirmed report creates one notification record for future delivery. Reviewed reports are read-only.
+
+Each SOS report belongs to a student, and each review belongs to a reviewer and one report. PostgreSQL stores submissions, paired GPS coordinates when available, and final decisions. GPS is optional and approximate. If permission is declined or unavailable, enter a campus location manually. This increment covers reporting and review. Device push and the incident map are planned for a later increment.
+
+### Upgrade an existing Alerto setup on Windows
+
+In the VS Code PowerShell terminal, from the repository folder:
+
+```powershell
+git switch main
+git pull --ff-only origin main
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
+.\venv\Scripts\python.exe manage.py migrate
+.\venv\Scripts\python.exe manage.py runserver 127.0.0.1:8001
 ```
 
-Open the repository link in an incognito window, then paste it into the [submission form](https://forms.gle/RmYMff8sL2Dp6pZ86).
+Keep your existing local `.env`. For Supabase, copy the Session pooler connection details into the corresponding `POSTGRES_*` settings and use `POSTGRES_SSLMODE=require`. Open [Alerto](http://127.0.0.1:8001/) and sign in.
+
+### Demo accounts
+
+To create the report's demo accounts, use an isolated disposable PostgreSQL database with `DJANGO_DEBUG=True`, apply migrations, then run:
+
+```powershell
+.\venv\Scripts\python.exe manage.py seed_pd2_demo --confirm-demo-database
+```
+
+| Dashboard | Username |
+| --- | --- |
+| Student | `pd2_student` |
+| Administrator | `pd2_reviewer` |
+
+The command prints a newly generated password for each new account in your own terminal. Save them privately if you need to reuse them.
+
+For a private setup, register a student through the form and create an administrator with `createsuperuser`. Use fresh passwords on a shared or deployed database. To demonstrate validation, submit with a blank campus location or input only one GPS coordinate. Run the regression suite with `python manage.py test` against PostgreSQL with permission to create a test database.

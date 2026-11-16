@@ -1,0 +1,16 @@
+{% extends "accounts/base.html" %}
+{% block title %}Review SOS reports{% endblock %}
+{% block content %}
+<h1>Review SOS reports</h1>
+<div class="grid">
+  {% for report in reports %}
+    <section class="card">
+      <h2><a href="{% url 'incidents:review_detail' report.pk %}">SOS report #{{ report.pk }}</a></h2>
+      <p>{{ report.get_category_display }} · {{ report.get_status_display }}</p>
+      <p>{{ report.location }} · {{ report.reporter.username }}</p>
+    </section>
+  {% empty %}
+    <p>No SOS reports have been submitted.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -54,3 +54,32 @@ class SOSReport(models.Model):
                 name="incidents_status_valid",
             ),
         ]
+
+
+class AlertReview(models.Model):
+    class Decision(models.TextChoices):
+        CONFIRMED = "confirmed", "Confirm"
+        DISMISSED = "dismissed", "Dismiss"
+
+    report = models.OneToOneField(SOSReport, on_delete=models.PROTECT, related_name="review")
+    reviewer = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="alert_reviews",
+    )
+    decision = models.CharField(max_length=12, choices=Decision.choices)
+    remarks = models.CharField(max_length=500, blank=True)
+    reviewed_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(decision__in=["confirmed", "dismissed"]),
+                name="incidents_review_decision_valid",
+            ),
+        ]
+
+
+class Notification(models.Model):
+    report = models.OneToOneField(SOSReport, on_delete=models.PROTECT, related_name="notification")
+    title = models.CharField(max_length=120)
+    message = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)

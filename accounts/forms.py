@@ -12,7 +12,10 @@ class RegistrationForm(UserCreationForm):
         fields = ("username", "email")
 
     def clean_email(self):
-        return self.cleaned_data["email"].lower()
+        email = self.cleaned_data["email"].lower()
+        if User.objects.filter(email__iexact=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError("This email is already registered.")
+        return email
 
 
 class ProfileForm(forms.ModelForm):
@@ -31,7 +34,10 @@ class ProfileForm(forms.ModelForm):
         fields = ("first_name", "last_name", "email", "contact_number")
 
     def clean_email(self):
-        return self.cleaned_data["email"].lower()
+        email = self.cleaned_data["email"].lower()
+        if User.objects.filter(email__iexact=email).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError("This email is already registered.")
+        return email
 
 
 def save_account_form(form):

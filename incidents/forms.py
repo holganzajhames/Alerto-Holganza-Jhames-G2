@@ -1,7 +1,7 @@
 from django import forms
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-from .models import SOSReport
+from .models import AlertReview, SOSReport
 
 
 class SOSReportForm(forms.ModelForm):
@@ -28,10 +28,20 @@ class SOSReportForm(forms.ModelForm):
     def clean(self):
         data = super().clean()
         if not ({"latitude", "longitude"} & self.errors.keys()):
-            if (data.get("latitude") is None) != (data.get("longitude") is None):
-                self.add_error(None, "Enter both coordinates or leave both blank.")
+            latitude_missing = data.get("latitude") is None
+            longitude_missing = data.get("longitude") is None
+            if latitude_missing != longitude_missing:
+                missing_field = "latitude" if latitude_missing else "longitude"
+                self.add_error(missing_field, "Enter both coordinates or leave both blank.")
         if data.get("location_accuracy_m") is not None and (
             data.get("latitude") is None or data.get("longitude") is None
         ):
             self.add_error("location_accuracy_m", "GPS accuracy requires both coordinates.")
         return data
+
+
+class AlertReviewForm(forms.ModelForm):
+    class Meta:
+        model = AlertReview
+        fields = ("decision", "remarks")
+        widgets = {"remarks": forms.Textarea(attrs={"rows": 3})}
