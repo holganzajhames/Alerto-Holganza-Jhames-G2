@@ -1,0 +1,19 @@
+{% extends "accounts/base.html" %}
+{% block title %}Administrator dashboard{% endblock %}
+{% block content %}
+<h1>Administrator dashboard</h1>
+<div class="grid">
+  <section class="card">
+    <h2>Student accounts</h2>
+    <p class="stat">{{ student_count }}</p>
+    {% if perms.accounts.view_user or perms.accounts.change_user %}
+      <a class="button" href="{% url 'admin:accounts_user_changelist' %}">Manage accounts</a>
+    {% endif %}
+  </section>
+  <section class="card">
+    <h2>Your profile</h2>
+    <p>Review or update your administrator contact details.</p>
+    <a class="button" href="{% url 'profile' %}">View your profile</a>
+  </section>
+</div>
+{% endblock %}

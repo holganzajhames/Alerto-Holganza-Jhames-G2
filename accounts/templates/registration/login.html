@@ -1,0 +1,14 @@
+{% extends "accounts/base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<section class="card form-card">
+  <h1>Sign in</h1>
+  <p>Access your Alerto campus safety account.</p>
+  <form method="post" class="fields">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button type="submit">Sign in</button>
+  </form>
+  <p>New to Alerto? <a href="{% url 'register' %}">Create a student account</a>.</p>
+</section>
+{% endblock %}
