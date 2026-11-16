@@ -63,7 +63,7 @@ class SOSFlowTests(TestCase):
             ({"location": " "}, "location"),
             ({"category": "unexpected"}, "category"),
             ({"latitude": "90.1", "longitude": "123"}, "latitude"),
-            ({"longitude": "123"}, "__all__"),
+            ({"longitude": "123"}, "latitude"),
             ({"location_accuracy_m": "10"}, "location_accuracy_m"),
         ]
         for fields, key in cases:
