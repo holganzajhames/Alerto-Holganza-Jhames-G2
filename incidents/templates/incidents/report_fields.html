@@ -1,0 +1,15 @@
+<dl>
+  <dt>Status</dt><dd>{{ report.get_status_display }}</dd>
+  <dt>Incident type</dt><dd>{{ report.get_category_display }}</dd>
+  <dt>Location</dt><dd>{{ report.location }}</dd>
+  <dt>Description</dt><dd>{{ report.description|linebreaksbr }}</dd>
+  {% if report.latitude != None %}
+    <dt>Approximate GPS coordinates</dt><dd>{{ report.latitude }}, {{ report.longitude }}</dd>
+    {% if report.location_accuracy_m != None %}
+      <dt>Reported GPS accuracy</dt><dd>{{ report.location_accuracy_m }} m</dd>
+    {% endif %}
+  {% else %}
+    <dt>GPS coordinates</dt><dd>Unavailable</dd>
+  {% endif %}
+  <dt>Submitted</dt><dd>{{ report.created_at|date:"M j, Y, g:i A" }}</dd>
+</dl>
